@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: app-novnc
+          image: docker.io/traefik/whoami
+          env:
+            - name: WHOAMI_PORT_NUMBER
+              value: "6080"
+            - name: WHOAMI_NAME
+              value: "novnc"
+          ports:
+            - containerPort: 6080
+              name: novnc
+        - name: app-api
+          image: docker.io/traefik/whoami
+          env:
+            - name: WHOAMI_PORT_NUMBER
+              value: "3033"
+            - name: WHOAMI_NAME
+              value: "api"
+          ports:
+            - containerPort: 3033
+              name: api
